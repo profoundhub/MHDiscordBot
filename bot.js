@@ -22,6 +22,9 @@ client.on('ready', () => {
 });
 
 // An array of all the commands.
+// Adding another layer is useful to have more descriptive/longer variable names,
+// but still have a short command for the user.
+// This is also used to list all the commands to the user.
 let cmdList = {
     commandList: "commands",
     createCron: "createCronJob",
@@ -56,7 +59,6 @@ client.on('message', (message) => {
     if (command === 'ping'){
         message.reply('pong');
     } else if(command === cmdList.commandList){
-        // TODO: use string builder for efficiency
         let tempStr = "Here are the current commands: \n```\n";
         for (let cmd in cmdList){
             tempStr += config.prefix + cmdList[cmd] + "\n";
