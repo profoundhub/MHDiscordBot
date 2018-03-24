@@ -1,7 +1,6 @@
 // TODO:
-// only admins allowed to work with cron jobs
 // !commands should describe commands. Store this in the cmdList array.
-// Which channel does the bot type to?
+// Which channel does the bot type to? It repsonds to where the command was created. have parameter to specify specific channel
 
 // Someone wrote this library to use the discord api.
 const Discord = require('discord.js');
@@ -21,16 +20,28 @@ client.on('ready', () => {
     console.log('I am ready!');
 });
 
-// An array of all the commands.
-// Adding another layer is useful to have more descriptive/longer variable names,
-// but still have a short command for the user.
-// This is also used to list all the commands to the user.
+/* An array of all the commands.
+Adding another layer is useful to have more descriptive/longer variable names,
+but still have a short command for the user.
+This is also used to list all the commands to the user.
+*/
 let cmdList = {
     commandList: "commands",
     createCron: "createCronJob",
     startCron: "startCronJob",
     stopCron: "stopCronJob"
 };
+
+/* This is a list of roles in the discord server.
+If the roles change in the discord server, this list will need to be updated
+*/
+let roles = {
+    Admin: "Admin"
+}
+
+function verifyRole(msgObj, role){
+    return msgObj.member.roles.find("name", role);
+}
 
 // Watches the messages in chat
 client.on('message', (msgObj) => {
@@ -60,19 +71,19 @@ client.on('message', (msgObj) => {
             break;
 
         case cmdList.createCron:
-            cmdFunc.createCronJob(msgObj, args);
+            !verifyRole(msgObj, roles.Admin) ? cmdFunc.errPermission(msgObj) : cmdFunc.createCronJob(msgObj, args);
             break;
 
         case cmdList.startCron:
-            cmdFunc.startCronJob(msgObj, args);
+            !verifyRole(msgObj, roles.Admin) ? cmdFunc.errPermission(msgObj) : cmdFunc.startCronJob(msgObj, args);
             break;
 
         case cmdList.stopCron:
-            cmdFunc.stopCronJob(msgObj, args);
+            !verifyRole(msgObj, roles.Admin) ? cmdFunc.errPermission(msgObj) : cmdFunc.stopCronJob(msgObj, args);
             break;
 
         default:
-            printErrMsg(msgObj);
+            errInput(msgObj);
     }
 });
 
