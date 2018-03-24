@@ -83,7 +83,7 @@ client.on('message', (msgObj) => {
             break;
 
         default:
-            errInput(msgObj);
+            cmdFunc.show(msgObj, command + " is not a valid command.");
     }
 });
 
