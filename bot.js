@@ -53,14 +53,6 @@ client.on('message', (msgObj) => {
     const args = msgObj.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift();
 
-    // Helper function to verify the number of arguments in the user's input was correct.
-    args.validateArgs = function(count){
-        if (this.length == count)
-            return true;
-        else
-            return false;
-    }
-
     switch (command){
         case 'ping': // Example response
             msgObj.reply('pong');

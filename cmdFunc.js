@@ -6,7 +6,7 @@ This file will also contain helper functions
 
 const cron = require('node-cron');
 
-// TODO: use database
+// TODO: use SQLite
 // This variable is used to store all the cronJobs. If the bot is turned off, all current jobs will be deleted.
 let cronJobArr = [];
 
@@ -45,17 +45,16 @@ module.exports = {
         msgObj.channel.send(tempStr);
     },
 
-    /* !createCron Cron_Job_Name Message second minute hour day_of_month month day_of_week
+    /* !createCron Cron_Job_Name minute hour day_of_month month day_of_week Message
     see link for instructions on the arguments:
     https://github.com/merencia/node-cron */
     createCronJob: function (msgObj, args){
-        if (!args.validateArgs(7) && !args.validateArgs(8)){
+        if (args.length < 7){
             module.exports.errInput(msgObj);
             return;
         }
 
         let cronName = args[0];
-        let cronMsg = args[1];
 
         // Ensure job has not already been created
         if (cronName in cronJobArr){
@@ -63,7 +62,8 @@ module.exports = {
             return;
         }
 
-        let cronVal = args.slice(2).join(' ');
+        let cronVal = args.slice(1, 6).join(' ');
+        let cronMsg = args.slice(6).join(' ');
         if (cron.validate(cronVal)){
             cronJobArr[cronName] = cron.schedule(cronVal, function() {
                     msgObj.channel.send("@everyone " + cronMsg);
@@ -76,7 +76,8 @@ module.exports = {
 
     // !startCronJob Cron_Job_Name
     startCronJob: function (msgObj, args){
-        if (!args.validateArgs(1)){
+        if (args.length != 1){
+            console.log(args.length);
             module.exports.errInput(msgObj);
             return;
         }
@@ -92,7 +93,7 @@ module.exports = {
 
     // !stopCronJob Cron_Job_Name
     stopCronJob: function (msgObj, args){
-        if (!args.validateArgs(1)){
+        if (args.length != 1){
             module.exports.errInput(msgObj);
             return;
         }
