@@ -20,7 +20,7 @@ function startupCommands(){
 
     // Weekly reminder for Saturday FCC meeting.
     msgObj = client.channels.get(ANNOUNCEMENT_CHANNELID);
-    args = "MarkhamFCCReminder * 19 * * wed,fri Friendly reminder that we will be having our usual meetup at 10am-1pm this Saturday at the Aaniin Community Centre. Hope to @everyone there!".split(' ');
+    args = "MarkhamFCCReminder 0 19 * * wed,fri Friendly reminder that we will be having our usual meetup at 10am-1pm this Saturday at the Aaniin Community Centre. Hope to see @everyone there!".split(' ');
     cmdFunc.createCronJob(msgObj, args);
 }
 
