@@ -6,22 +6,32 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-/* external modules */
-
-
 /* local files */
 const config = require('./config.json'); // contains prefix and token
 const cmdFunc = require('./cmdFunc.js'); // contains all the functions called in core switch statement
 
-const pre = config.prefix;
+const ANNOUNCEMENT_CHANNELID = '402209944658772000';
+
+// Use this to start up scripts to be run by the bot.
+// Do not use this for technical details of the bot.
+function startupCommands(){
+    let msgObj;
+    let args;
+
+    // Weekly reminder for Saturday FCC meeting.
+    msgObj = client.channels.get(ANNOUNCEMENT_CHANNELID);
+    args = "MarkhamFCCReminder * 7 * * wed,fri Friendly reminder that we will be having our usual meetup at 10am-1pm this Saturday at the Aaniin Community Centre. Hope to @everyone there!".split(' ');
+    cmdFunc.createCronJob(msgObj, args);
+}
 
 // Prints "I am ready" when the bot is on
 client.on('ready', () => {
     console.log('I am ready!');
+    startupCommands();
 });
 
 /* An array of all the commands.
-Adding another layer is useful to have more descriptive/longer variable names,
+Having this list is useful to have more descriptive/longer variable names,
 but still have a short command for the user.
 This is also used to list all the commands to the user.
 */

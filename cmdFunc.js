@@ -17,7 +17,10 @@ module.exports = {
 
     // Prints to the console as well as replies to the user with the text
     show: function (msgObj, text) {
-        msgObj.reply(text);
+        if (msgObj.type === 'text')
+            msgObj.send(text)
+        else if (msgObj === 'DEFAULT')
+            msgObj.reply(text);
         console.log(text);
     },
 
@@ -46,6 +49,7 @@ module.exports = {
     },
 
     /* !createCron Cron_Job_Name minute hour day_of_month month day_of_week Message
+    e.g. !createCron test * * * * * This message will display every minute
     see link for instructions on the arguments:
     https://github.com/merencia/node-cron */
     createCronJob: function (msgObj, args){
@@ -65,10 +69,17 @@ module.exports = {
         let cronVal = args.slice(1, 6).join(' ');
         let cronMsg = args.slice(6).join(' ');
         if (cron.validate(cronVal)){
-            cronJobArr[cronName] = cron.schedule(cronVal, function() {
-                    msgObj.channel.send("@everyone " + cronMsg);
+            if (msgObj.type === 'DEFAULT'){
+                cronJobArr[cronName] = cron.schedule(cronVal, function() {
+                    msgObj.channel.send(cronMsg);
                 }, false);
-            module.exports.show(msgObj, "created cron job: " + cronName);
+                module.exports.show(msgObj, "created cron job: " + cronName);
+            } else if (msgObj.type === 'text'){
+                cronJobArr[cronName] = cron.schedule(cronVal, function() {
+                    msgObj.send("@everyone " + cronMsg);
+                }, true);
+                console.log("Created and started cron job: " + cronName);
+            }
         } else {
             module.exports.errInput(msgObj);
         }
