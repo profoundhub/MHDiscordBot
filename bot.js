@@ -6,11 +6,34 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+// Allows input in node.js CLI
+const prompt = require('prompt');
+prompt.start();
+
 /* local files */
 const config = require('./config.json'); // contains prefix and token
 const cmdFunc = require('./cmdFunc.js'); // contains all the functions called in core switch statement
 
 const ANNOUNCEMENT_CHANNELID = '402209944658772000';
+
+// Prints "I am ready" when the bot is on
+client.on('ready', () => {
+    console.log('I am ready!');
+    prompt.get(['startInit'], function (err, result){
+        if (err) { return onErr(err); }
+        if (result.startInit === 'init'){
+            startupCommands();
+        } else{
+            console.log("Closing prompt");
+        }
+    });
+});
+
+
+function onErr(err){
+    console.log(err);
+    return 1;
+}
 
 // Use this to start up scripts to be run by the bot.
 // Do not use this for technical details of the bot.
@@ -23,12 +46,6 @@ function startupCommands(){
     args = "MarkhamFCCReminder 0 19 * * wed,fri Friendly reminder that we will be having our usual meetup at 10am-1pm this Saturday at the Aaniin Community Centre. Hope to see @everyone there!".split(' ');
     cmdFunc.createCronJob(msgObj, args);
 }
-
-// Prints "I am ready" when the bot is on
-client.on('ready', () => {
-    console.log('I am ready!');
-    startupCommands();
-});
 
 /* An array of all the commands.
 Having this list is useful to have more descriptive/longer variable names,

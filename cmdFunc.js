@@ -62,7 +62,11 @@ module.exports = {
 
         // Ensure job has not already been created
         if (cronName in cronJobArr){
-            module.exports.show(msgObj, "There is already a job named " + cronName);
+            if (msgObj.type === 'DEFAULT'){
+                module.exports.show(msgObj, "There is already a job named " + cronName);
+            } else if (msgObj.type === 'text'){
+                console.log("There is already a job named " + cronName);
+            }
             return;
         }
 
