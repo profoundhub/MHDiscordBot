@@ -80,7 +80,7 @@ module.exports = {
                 module.exports.show(msgObj, "created cron job: " + cronName);
             } else if (msgObj.type === 'text'){
                 cronJobArr[cronName] = cron.schedule(cronVal, function() {
-                    msgObj.send("@everyone " + cronMsg);
+                    msgObj.send(cronMsg);
                 }, true);
                 console.log("Created and started cron job: " + cronName);
             }
