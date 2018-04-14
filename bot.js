@@ -29,9 +29,8 @@ client.on('ready', () => {
     });
 });
 
-
 function onErr(err){
-    console.log(err);
+    console.error(err);
     return 1;
 }
 
