@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Markham Hill Bot",
   "main": "bot.js",
-  "author": "Kevin Chan",  
+  "author": "Kevin Chan",
   "scripts": {    
     "start": "node bot.js"
   },
