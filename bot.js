@@ -13,18 +13,17 @@ prompt.start();
 /* local files */
 const config = require('./config.json'); // contains prefix and token
 const cmdFunc = require('./cmdFunc.js'); // contains all the functions called in core switch statement
-
 const ANNOUNCEMENT_CHANNELID = '402209944658772000';
 
 // Prints "I am ready" when the bot is on
 client.on('ready', () => {
     console.log('I am ready!');
-    prompt.get(['startInit'], function (err, result){
+    prompt.get(['startInit'], function (err, result) {
         if (err) { return onErr(err); }
-        if (result.startInit === 'init'){
+        if (result.startInit === 'init') {
             startupCommands();
         } else{
-            console.log("Closing prompt");
+            console.log("Closing Prompt");
         }
     });
 });
