@@ -1,9 +1,12 @@
-module.exports = {
-    "extends": "airbnb",
-    "installedESLint": true,
-    "plugins": [
-        "react",
-        "jsx-a11y",
-        "import"
-    ]
-};
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "semi": 2
+    }
+}

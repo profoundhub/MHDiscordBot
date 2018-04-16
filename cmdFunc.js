@@ -1,7 +1,7 @@
 /* To improve code readability, all bot commands will be wrapped around in a function
 and the switch statement in the main file will call the function
 
-This file will also contain helper functions 
+This file will also contain helper functions
 */
 
 const cron = require('node-cron');
@@ -25,12 +25,12 @@ module.exports = {
     },
 
     // common error message for invalid inputs
-    errInput: function (msgObj){
+    errInput: function (msgObj) {
         msgObj.reply("Sorry, there seems to be an error in your input.");
     },
 
     // common error message for invalid permissions
-    errPermission: function (msgObj){
+    errPermission: function (msgObj) 
         msgObj.reply("insufficient permissions to use this command.");
     },
 
@@ -39,7 +39,7 @@ module.exports = {
     * COMMAND FUNCTIONS *
     *********************/
 
-    printCommandList: function (msgObj){
+    printCommandList: function (msgObj) {
         let tempStr = "Here are the current commands: \n```\n";
         for (let cmd in cmdList){
             tempStr += config.prefix + cmdList[cmd] + "\n";
@@ -52,6 +52,7 @@ module.exports = {
     e.g. !createCron test * * * * * This message will display every minute
     see link for instructions on the arguments:
     https://github.com/merencia/node-cron */
+
     createCronJob: function (msgObj, args){
         if (args.length < 7){
             module.exports.errInput(msgObj);
@@ -62,7 +63,7 @@ module.exports = {
 
         // Ensure job has not already been created
         if (cronName in cronJobArr){
-            if (msgObj.type === 'DEFAULT'){
+            if (msgObj.type === 'DEFAULT') {
                 module.exports.show(msgObj, "There is already a job named " + cronName);
             } else if (msgObj.type === 'text'){
                 console.log("There is already a job named " + cronName);
@@ -90,7 +91,7 @@ module.exports = {
     },
 
     // !startCronJob Cron_Job_Name
-    startCronJob: function (msgObj, args){
+    startCronJob: function (msgObj, args) {
         if (args.length != 1){
             console.log(args.length);
             module.exports.errInput(msgObj);
@@ -98,7 +99,7 @@ module.exports = {
         }
 
         let CronName = args[0];
-        if (CronName in cronJobArr){
+        if (CronName in cronJobArr) {
             cronJobArr[CronName].start();
             module.exports.show(msgObj, CronName + " started.");
         } else {
@@ -107,7 +108,7 @@ module.exports = {
     },
 
     // !stopCronJob Cron_Job_Name
-    stopCronJob: function (msgObj, args){
+    stopCronJob: function (msgObj, args) {
         if (args.length != 1){
             module.exports.errInput(msgObj);
             return;
