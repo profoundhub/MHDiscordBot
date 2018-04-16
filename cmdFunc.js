@@ -1,7 +1,7 @@
 /* To improve code readability, all bot commands will be wrapped around in a function
 and the switch statement in the main file will call the function
 
-This file will also contain helper functions 
+This file will also contain helper functions
 */
 
 const cron = require('node-cron');
@@ -52,7 +52,7 @@ module.exports = {
     e.g. !createCron test * * * * * This message will display every minute
     see link for instructions on the arguments:
     https://github.com/merencia/node-cron */
-    
+
     createCronJob: function (msgObj, args){
         if (args.length < 7){
             module.exports.errInput(msgObj);
