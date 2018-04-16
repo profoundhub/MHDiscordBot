@@ -50,6 +50,7 @@ Having this list is useful to have more descriptive/longer variable names,
 but still have a short command for the user.
 This is also used to list all the commands to the user.
 */
+
 let cmdList = {
     commandList: "commands",
     createCron: "createCronJob",
